@@ -1,28 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Vue App</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
   <div id="first-application">
     <h2>{{ firstVariable }}</h2>
   </div>
-</body>
-<script>
-  const { createApp } = Vue
 
-  createApp({
-    data() {
-      return {
-        firstVariable: "Welcome to Vue"
+  <div class="app-container">
+    <h1>My Goals</h1>
+    <input type="text" placeholder="Enter your goal" v-model="newGoal">
+    <button @click="addGoal">Add Goal</button>
+    <ul>
+      <li v-for="(goal, index) in goals" :key="index">{{ goal }}</li>
+    </ul>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          firstVariable: "Welcome to Vue",
+          newGoal: '',
+          goals: []
+        }
+      },
+      methods: {
+        addGoal() {
+          if (this.newGoal.trim()) {
+            this.goals.push(this.newGoal);
+            this.newGoal = ''; // clear the input field after adding goal
+          }
+        }
       }
-    }
-  }).mount("#first-application");
-</script>
+    }).mount("#first-application");
+  </script>
+</body>
 
 </html>
